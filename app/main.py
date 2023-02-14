@@ -1,8 +1,7 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 
-from app.cipher import decipher_word
+from app.decipher import get_list_with_deciphered_words
 
 app = FastAPI()
 
@@ -12,7 +11,7 @@ def send_form():
     return FileResponse("./app/template/cipher.html")
 
 
-@app.post("/post_cipher")
+@app.post("/post_decipher")
 def read_cipher(cipher: str = Form()):
-    words_after_decipher = decipher_word(cipher)
-    return {"cipher": words_after_decipher}
+    words_after_decipher = get_list_with_deciphered_words(cipher)
+    return {"Deciphered words": words_after_decipher}
